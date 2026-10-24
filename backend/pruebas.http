@@ -1,0 +1,23 @@
+@baseUrl = http://localhost:8080/api/alumnos
+
+### 1. GET general (esperado 200 OK)
+GET {{baseUrl}}
+
+### 2. POST registrar alumno (esperado 201 Created)
+# @name crear
+POST {{baseUrl}}
+Content-Type: application/json
+
+{"nombres":"Carlos Díaz","carrera":"Ingeniería Civil","ciclo":3,"promedio":12.0}
+
+### 3. PUT actualizar alumno existente (esperado 200 OK)
+PUT {{baseUrl}}/3
+Content-Type: application/json
+
+{"nombres":"María Rojas","carrera":"Ingeniería de Sistemas","ciclo":7,"promedio":15.0}
+
+### 4. DELETE alumno creado en la prueba 2 (esperado 204 No Content)
+DELETE {{baseUrl}}/{{crear.response.body.id}}
+
+### 5. GET id inexistente (esperado 404 Not Found)
+GET {{baseUrl}}/999
