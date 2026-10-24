@@ -1,0 +1,49 @@
+<section class="contenedor">
+  <header class="encabezado">
+    <h1>Gestión académica de alumnos</h1>
+    <button type="button" class="btn-secundario" (click)="cargarAlumnos()">Recargar</button>
+  </header>
+
+  @if (error()) {
+    <div class="alerta-error" role="alert">{{ error() }}</div>
+  }
+
+  @if (cargando()) {
+    <p class="mensaje">Cargando alumnos...</p>
+  } @else if (!error() && alumnos().length === 0) {
+    <p class="mensaje">No hay alumnos registrados.</p>
+  } @else if (alumnos().length > 0) {
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombres</th>
+          <th>Carrera</th>
+          <th>Ciclo</th>
+          <th>Promedio</th>
+          <th>Estado académico</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (alumno of alumnos(); track alumno.id) {
+          <tr>
+            <td>{{ alumno.id }}</td>
+            <td>{{ alumno.nombres }}</td>
+            <td>{{ alumno.carrera }}</td>
+            <td>{{ alumno.ciclo }}</td>
+            <td>{{ alumno.promedio | number: '1.1-2' }}</td>
+            <td>
+              <span class="estado" [class.riesgo]="alumno.estadoAcademico === 'EN RIESGO'">
+                {{ alumno.estadoAcademico }}
+              </span>
+            </td>
+            <td>
+              <button type="button" class="btn-eliminar" (click)="eliminar(alumno)">Eliminar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>
